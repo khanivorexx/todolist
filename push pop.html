@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hello Bulma!</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css"
+    />
+  </head>
+  <body>
+    <section class="section">
+      <div class="container">
+        <h1 class="title">Hello World</h1>
+        <p class="subtitle">My first website with <strong>Bulma</strong>!</p>
+      </div>
+    </section>
+    <script>
+      let numbers = [3, 8, 12, 5, 7, 20, 1, 14];
+      let evens = [];
+      for (let i = 0; i <= numbers.length; i++) {
+        if (numbers[i] % 2 == 0) {
+          evens.push(numbers[i]);
+        }
+      }
+      console.log(evens);
+
+      let prices = [500, 2500, 800, 1200, 3000];
+      let expensive = [];
+      let n = prices.length;
+      for (i = 0; i <= n; i++) {
+        if (prices[i] >= 1000) {
+          let too = prices[i];
+          expensive.push(too);
+        }
+      }
+      for (i = 0; i <= n; i++) {
+        prices.pop();
+      }
+      console.log("exp", expensive);
+      console.log("price", prices);
+
+      let scores = [98, 91, 85, 77, 60];
+      for (i = 0; i < 3; i++) {
+        if (scores[i] >= 90) {
+          console.log(scores[i] + " - Alt");
+        } else if (scores[i] >= 80) {
+          console.log(scores[i] + " - Mungu");
+        }
+      }
+
+      let fruits = ["alim", "luuvan", "jurj", "kiwi"];
+      for (i = 1; i <= fruits.length; i++) {
+        if (fruits[i] === "luuvan") {
+          fruits.splice(i, 1);
+        }
+      }
+      console.log(fruits);
+    </script>
+  </body>
+</html>

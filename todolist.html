@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ToDoList</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css"
+    />
+  </head>
+  <body>
+    <section class="section">
+      <div class="container" style="max-width: 500px">
+        <h1 class="title is-3 has-text-centered mb-5">
+          Хийх зүйлсийн жагсаалт
+        </h1>
+
+        <div class="field has-addons mb-4">
+          <div class="control is-expanded">
+            <input
+              placeholder="Хийх зүйлээ бичнэ үү..."
+              class="input"
+              id="input"
+              type="text"
+            />
+          </div>
+          <div class="control">
+            <button class="button is-primary" onclick="addTodo()">Нэмэх</button>
+          </div>
+          <div class="control">
+            <button class="button is-warning is-light" onclick="clearTodos()">
+              Цэвэрлэх
+            </button>
+          </div>
+        </div>
+        <div id="container"></div>
+
+        <div
+          class="is-flex is-justify-content-space-between is-align-items-center mt-5 mb-2"
+        >
+          <h2 class="title is-5 mb-0">Түүх</h2>
+          <button
+            onclick="clearHistory()"
+            class="button is-small is-danger is-light"
+          >
+            Түүх цэвэрлэх
+          </button>
+        </div>
+        <div id="history-container" class="box has-background-light"></div>
+      </div>
+    </section>
+    <script>
+      const todos = [];
+      const history = [];
+
+      const input = document.getElementById("input");
+      const container = document.getElementById("container");
+      const historyContainer = document.getElementById("history-container");
+
+      const addTodo = () => {
+        if (input.value.trim() === "") return;
+        todos.push(input.value);
+        renderTodo();
+        input.value = "";
+      };
+
+      const deleteTodo = (index) => {
+        todos.splice(index, 1);
+        renderTodo();
+      };
+
+      const clearTodos = () => {
+        history.push(...todos);
+        todos.length = 0;
+        renderTodo();
+        renderHistory();
+      };
+
+      const clearHistory = () => {
+        history.length = 0;
+        renderHistory();
+      };
+
+      const restoreTodo = (index) => {
+        todos.push(history[index]);
+        history.splice(index, 1);
+        renderTodo();
+        renderHistory();
+      };
+
+      const renderTodo = () => {
+        container.textContent = "";
+        for (let i = 0; i < todos.length; i++) {
+          const newDiv = document.createElement("div");
+          newDiv.classList.add(
+            "box",
+            "p-3",
+            "mb-2",
+            "is-flex",
+            "is-justify-content-space-between",
+            "is-align-items-center",
+          );
+
+          const textSpan = document.createElement("span");
+          textSpan.textContent = todos[i];
+          newDiv.appendChild(textSpan);
+
+          const deleteBtn = document.createElement("button");
+          deleteBtn.classList.add("delete", "has-background-danger");
+          deleteBtn.onclick = () => deleteTodo(i);
+          newDiv.appendChild(deleteBtn);
+
+          container.appendChild(newDiv);
+        }
+      };
+      const renderHistory = () => {
+        historyContainer.textContent = "";
+        for (let i = 0; i < history.length; i++) {
+          const historyDiv = document.createElement("div");
+          historyDiv.classList.add(
+            "py-1",
+            "has-text-grey",
+            "is-flex",
+            "is-justify-content-space-between",
+            "is-align-items-center",
+          );
+
+          const textSpan = document.createElement("span");
+          textSpan.textContent = history[i];
+          historyDiv.appendChild(textSpan);
+
+          const restoreBtn = document.createElement("button");
+          restoreBtn.textContent = "↑";
+          restoreBtn.classList.add("button", "is-small", "is-info", "is-light");
+          restoreBtn.onclick = () => restoreTodo(i);
+          historyDiv.appendChild(restoreBtn);
+          historyContainer.appendChild(historyDiv);
+        }
+      };
+    </script>
+  </body>
+</html>
